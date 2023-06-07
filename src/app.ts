@@ -8,6 +8,6 @@ app.get("/", (req, res) => {
   res.send("Hello, World!");
 });
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.listen(3000, () => {
+app.listen(80, () => {
   console.log("Server berjalan di port 3000");
 });
