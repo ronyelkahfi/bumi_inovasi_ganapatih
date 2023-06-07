@@ -50,6 +50,22 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Description of the error"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -236,6 +252,64 @@
         "responses": {
           "200": {
             "description": "Chat deleted for all participants"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "User ID"
+          },
+          "phoneNumber": {
+            "type": "string",
+            "description": "Phone number of the user"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the user"
+          }
+        }
+      },
+      "Chat": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Chat ID"
+          },
+          "participants": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            },
+            "description": "Participants of the chat"
+          },
+          "groupName": {
+            "type": "string",
+            "description": "Name of the group chat"
+          }
+        }
+      },
+      "Image": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Image ID"
+          },
+          "url": {
+            "type": "string",
+            "description": "URL of the image"
+          },
+          "chatId": {
+            "type": "string",
+            "description": "ID of the chat associated with the image"
           }
         }
       }
