@@ -296,6 +296,27 @@
                     }
                 }
             },
+            "GroupMessage": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Message ID"
+                    },
+                    "chatId": {
+                        "type": "string",
+                        "description": "ID of the chat group"
+                    },
+                    "sender": {
+                        "$ref": "#/components/schemas/User",
+                        "description": "Sender of the message"
+                    },
+                    "content": {
+                        "type": "string",
+                        "description": "Content of the message"
+                    }
+                }
+            },
             "Image": {
                 "type": "object",
                 "properties": {
