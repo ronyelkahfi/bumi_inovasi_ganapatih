@@ -5,6 +5,114 @@
     "description": "Simple Chat Application",
     "version": "1.0.0"
   },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "User ID"
+          },
+          "phoneNumber": {
+            "type": "string",
+            "description": "Phone number of the user"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the user"
+          }
+        }
+      },
+      "Chat": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Chat ID"
+          },
+          "participants": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            },
+            "description": "Participants of the chat"
+          },
+          "groupName": {
+            "type": "string",
+            "description": "Name of the group chat"
+          },
+          "chantType": {
+            "type": "string",
+            "enum": ["private", "group"],
+            "description": "Type chat group or private"
+          }
+        }
+      },
+      "Message": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Message ID"
+          },
+          "chatId": {
+            "type": "string",
+            "description": "ID of the chat group"
+          },
+          "sender": {
+            "$ref": "#/components/schemas/User",
+            "description": "Sender of the message"
+          },
+          "content": {
+            "type": "string",
+            "description": "Content of the message"
+          },
+          "deletedAt": {
+            "type": "string",
+            "description": "message deleted date, if not null the message disapear from all user",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "array",
+            "description": "message disapear from current user",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            }
+          }
+        }
+      },
+      "Image": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Image ID"
+          },
+          "url": {
+            "type": "string",
+            "description": "URL of the image"
+          },
+          "chatId": {
+            "type": "string",
+            "description": "ID of the chat associated with the image"
+          },
+          "deletedAt": {
+            "type": "string",
+            "description": "message deleted date, if not null the message disapear from all user",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "array",
+            "description": "message disapear from current user",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            }
+          }
+        }
+      }
+    }
+  },
   "paths": {
     "/users/register": {
       "post": {
@@ -285,114 +393,6 @@
         "responses": {
           "200": {
             "description": "Chat deleted for all participants"
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "User": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "User ID"
-          },
-          "phoneNumber": {
-            "type": "string",
-            "description": "Phone number of the user"
-          },
-          "name": {
-            "type": "string",
-            "description": "Name of the user"
-          }
-        }
-      },
-      "Chat": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "Chat ID"
-          },
-          "participants": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/User"
-            },
-            "description": "Participants of the chat"
-          },
-          "groupName": {
-            "type": "string",
-            "description": "Name of the group chat"
-          },
-          "chantType": {
-            "type": "string",
-            "enum": ["private", "group"],
-            "description": "Type chat group or private"
-          }
-        }
-      },
-      "Message": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "Message ID"
-          },
-          "chatId": {
-            "type": "string",
-            "description": "ID of the chat group"
-          },
-          "sender": {
-            "$ref": "#/components/schemas/User",
-            "description": "Sender of the message"
-          },
-          "content": {
-            "type": "string",
-            "description": "Content of the message"
-          },
-          "deletedAt": {
-            "type": "string",
-            "description": "message deleted date, if not null the message disapear from all user",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "array",
-            "description": "message disapear from current user",
-            "items": {
-              "$ref": "#/components/schemas/User"
-            }
-          }
-        }
-      },
-      "Image": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "Image ID"
-          },
-          "url": {
-            "type": "string",
-            "description": "URL of the image"
-          },
-          "chatId": {
-            "type": "string",
-            "description": "ID of the chat associated with the image"
-          },
-          "deletedAt": {
-            "type": "string",
-            "description": "message deleted date, if not null the message disapear from all user",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "array",
-            "description": "message disapear from current user",
-            "items": {
-              "$ref": "#/components/schemas/User"
-            }
           }
         }
       }
