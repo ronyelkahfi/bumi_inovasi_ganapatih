@@ -2,14 +2,14 @@
   "openapi": "3.0.0",
   "info": {
     "title": "BiG Chat",
-    "description": "Aplikasi Chatting Sederhana",
+    "description": "Simple Chat Application",
     "version": "1.0.0"
   },
   "paths": {
     "/users/register": {
       "post": {
-        "summary": "Registration user by phone number",
-        "description": "Registers a new user using their phone number",
+        "summary": "User registration with phone number",
+        "description": "User registration with phone number",
         "requestBody": {
           "content": {
             "application/json": {
@@ -18,15 +18,15 @@
                 "properties": {
                   "phoneNumber": {
                     "type": "string",
-                    "description": "Phone number of the user"
+                    "description": "No telepon user"
                   },
                   "name": {
                     "type": "string",
-                    "description": "Name of the user"
+                    "description": "Nama user"
                   },
                   "password": {
                     "type": "string",
-                    "description": "Password of the user"
+                    "description": "Password user"
                   }
                 },
                 "required": ["phoneNumber", "name", "password"]
@@ -35,16 +35,38 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Successful registration",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "userId": {
+                    "code": {
+                      "type": "integer",
+                      "default": 200,
+                      "description": "code response http created"
+                    },
+                    "message": {
                       "type": "string",
-                      "description": "ID of the registered user"
+                      "description": "pesan yang mendeskripsikan object `code`"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "userId": {
+                          "type": "string",
+                          "description": "User id terdaftar"
+                        },
+                        "phoneNumber": {
+                          "type": "string",
+                          "description": "Nomor telepon user"
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "Nama User"
+                        }
+                      }
                     }
                   }
                 }
@@ -58,9 +80,20 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "error": {
+                    "code": {
+                      "type": "integer",
+                      "default": 400,
+                      "description": "code response http bad request"
+                    },
+                    "message": {
                       "type": "string",
-                      "description": "Description of the error"
+                      "default": "Bad Request",
+                      "description": "pesan yang mendeskripsikan object `code`"
+                    },
+                    "constraint": {
+                      "type": "array",
+                      "default": [],
+                      "description": "Array of string berisi pesan error"
                     }
                   }
                 }
@@ -293,10 +326,15 @@
           "groupName": {
             "type": "string",
             "description": "Name of the group chat"
+          },
+          "chantType": {
+            "type": "string",
+            "enum": ["private", "group"],
+            "description": "Type chat group or private"
           }
         }
       },
-      "GroupMessage": {
+      "Message": {
         "type": "object",
         "properties": {
           "id": {
@@ -314,6 +352,18 @@
           "content": {
             "type": "string",
             "description": "Content of the message"
+          },
+          "deletedAt": {
+            "type": "string",
+            "description": "message deleted date, if not null the message disapear from all user",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "array",
+            "description": "message disapear from current user",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            }
           }
         }
       },
@@ -331,6 +381,18 @@
           "chatId": {
             "type": "string",
             "description": "ID of the chat associated with the image"
+          },
+          "deletedAt": {
+            "type": "string",
+            "description": "message deleted date, if not null the message disapear from all user",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "array",
+            "description": "message disapear from current user",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            }
           }
         }
       }
